@@ -11,7 +11,7 @@ input_shapefile="$1"
 output_geojson="$2"
 
 # Convert Shapefile to GeoJSON and sort it
-python sort_shapefile.py "$input_shapefile" "$output_geojson"
+python sort_IUCN.py "$input_shapefile" "$output_geojson"
 
 # Create mbtiles using Tippecanoe
-tippecanoe -o "${output_geojson%.geojson}.mbtiles" "$output_geojson" -Z0 -z10 --preserve-input-order
+tippecanoe -o "${output_geojson%.geojson}.mbtiles" "$output_geojson" -f -Z0 -z10 --preserve-input-order
