@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8' />
+  <title>WDPA</title>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+  <script src='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css' rel='stylesheet' />
+  <style>
+    body { margin: 0; padding: 0; }
+    #map { position: absolute; top: 0; bottom: 0; width: 100%; }
+  </style>
+</head>
+<body>
+  <div id='map'></div>
+  <div id="zoom-level" style="position: absolute; top: 10px; left: 10px; background-color: white; padding: 5px;"></div>
+  <script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoibWFudWthbGE2IiwiYSI6ImNrMmwxNTVkeDAyOXczaG4yMm96cWo0MnMifQ.T5LW1w_2ccMa_4Km3YALGQ';
+
+    var map = new mapboxgl.Map({
+      container: 'map',
+      style: {
+        'version': 8,
+        'center': [-60, -5],
+        'zoom': 5,
+        'sources': {
+          'wdpa_full': {
+            'type': 'vector',
+            'tiles': ['http://localhost:8888/data/wdpa_full/{z}/{x}/{y}.pbf'], 
+            'tileSize': 512
+          },
+          'basemap': {
+            'type': 'raster',
+            'tiles': ['https://api.mapbox.com/styles/v1/manukala6/ckug8qwou0hz018ntwn9ju7pe/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFudWthbGE2IiwiYSI6ImNrMmwxNTVkeDAyOXczaG4yMm96cWo0MnMifQ.T5LW1w_2ccMa_4Km3YALGQ'],
+            'tileSize': 256,
+          }
+        },
+        'layers': [
+          {
+            'id': 'basemap',
+            'type': 'raster',
+            'source': 'basemap',
+            'minzoom': 0,
+            'maxzoom': 22
+          },
+          {
+            'id': 'category_not_assigned_fill',
+            'type': 'fill',
+            'source': 'wdpa_full',
+            'source-layer': 'wdpa_full',
+            'paint': {
+              'fill-color': '#e7ab36',
+              'fill-opacity': 1
+            },
+            'filter': ['all', ['==', 'IUCN_CAT', 'Not Assigned']]
+          },
+          {
+            'id': 'category_not_applicable_fill',
+            'type': 'fill',
+            'source': 'wdpa_full',
+            'source-layer': 'wdpa_full',
+            'paint': {
+              'fill-color': '#eed54c',
+              'fill-opacity': 1
+            },
+            'filter': ['all', ['==', 'IUCN_CAT', 'Not Applicable']]
+          },
+          {
+            'id': 'category_not_reported_fill',
+            'type': 'fill',
+            'source': 'wdpa_full',
+            'source-layer': 'wdpa_full',
+            'paint': {
+              'fill-color': '#fa894b',
+              'fill-opacity': 1
+            },
+            'filter': ['all', ['==', 'IUCN_CAT', 'Not Reported']]
+          },
+          {
+            'id': 'category_vi_fill',
+            'type': 'fill',
+            'source': 'wdpa_full',
+            'source-layer': 'wdpa_full',
+            'paint': {
+              'fill-color': '#daa89b',
+              'fill-opacity': 1
+            },
+            'filter': ['all', ['==', 'IUCN_CAT', 'VI']]
+          },
+          {
+            'id': 'category_v_fill',
+            'type': 'fill',
+            'source': 'wdpa_full',
+            'source-layer': 'wdpa_full',
+            'paint': {
+              'fill-color': '#ae847e',
+              'fill-opacity': 1
+            },
+            'filter': ['all', ['==', 'IUCN_CAT', 'V']]
+          },
+          {
+            'id': 'category_iv_fill',
+            'type': 'fill',
+            'source': 'wdpa_full',
+            'source-layer': 'wdpa_full',
+            'paint': {
+              'fill-color': '#b9b2a1',
+              'fill-opacity': 1
+            },
+            'filter': ['all', ['==', 'IUCN_CAT', 'IV']]
+          },
+          {
+            'id': 'category_iii_fill',
+            'type': 'fill',
+            'source': 'wdpa_full',
+            'source-layer': 'wdpa_full',
+            'paint': {
+              'fill-color': '#c9ddff',
+              'fill-opacity': 1
+            },
+            'filter': ['all', ['==', 'IUCN_CAT', 'III']]
+          },
+          {
+            'id': 'category_ii_fill',
+            'type': 'fill',
+            'source': 'wdpa_full',
+            'source-layer': 'wdpa_full',
+            'paint': {
+              'fill-color': '#0f3b82',
+              'fill-opacity': 1
+            },
+            'filter': ['all', ['==', 'IUCN_CAT', 'II']]
+          },
+          {
+            'id': 'category_ib_fill',
+            'type': 'fill',
+            'source': 'wdpa_full',
+            'source-layer': 'wdpa_full',
+            'paint': {
+              'fill-color': '#3e7bb6',
+              'fill-opacity': 1
+            },
+            'filter': ['all', ['==', 'IUCN_CAT', 'Ib']]
+          },
+          {
+            'id': 'category_ia_fill',
+            'type': 'fill',
+            'source': 'wdpa_full',
+            'source-layer': 'wdpa_full',
+            'paint': {
+              'fill-color': '#5ca2d1',
+              'fill-opacity': 1
+            },
+            'filter': ['all', ['==', 'IUCN_CAT', 'Ia']]
+          },
+        ]
+      }
+    })
+
+    map.on('load', function () {
+        document.getElementById('zoom-level').innerText = 'Zoom Level: ' + map.getZoom().toFixed(2);
+
+        map.on('zoom', function () {
+            document.getElementById('zoom-level').innerText = 'Zoom Level: ' + map.getZoom().toFixed(2);
+        });
+    });
+
+
+
+  </script>
+</body>
+</html>

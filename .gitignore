@@ -1,0 +1,6 @@
+*.mbtiles
+*.geojson
+input/*
+output/*
+.vscode
+.metals

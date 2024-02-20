@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8' />
+  <title>WDPA</title>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+  <script src='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css' rel='stylesheet' />
+  <style>
+    body { margin: 0; padding: 0; }
+    #map { position: absolute; top: 0; bottom: 0; width: 100%; }
+  </style>
+</head>
+<body>
+  <div id='map'></div>
+  <div id="zoom-level" style="position: absolute; top: 10px; left: 10px; background-color: white; padding: 5px;"></div>
+  <script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoibWFudWthbGE2IiwiYSI6ImNrMmwxNTVkeDAyOXczaG4yMm96cWo0MnMifQ.T5LW1w_2ccMa_4Km3YALGQ';
+
+    var map = new mapboxgl.Map({
+      container: 'map',
+      style: {
+        'version': 8,
+        'center': [-60, -5],
+        'zoom': 5,
+        'sources': {
+          'landmark_indicative_lands': {
+            'type': 'vector',
+            'tiles': ['https://tiles.globalforestwatch.org/landmark_indicative_lands/v202312/default/{z}/{x}/{y}.pbf'], // add tile cache here
+            'tileSize': 512
+          },
+          'basemap': {
+            'type': 'raster',
+            'tiles': ['https://api.mapbox.com/styles/v1/manukala6/ckug8qwou0hz018ntwn9ju7pe/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFudWthbGE2IiwiYSI6ImNrMmwxNTVkeDAyOXczaG4yMm96cWo0MnMifQ.T5LW1w_2ccMa_4Km3YALGQ'],
+            'tileSize': 256,
+          }
+        },
+        'layers': [
+          {
+            'id': 'basemap',
+            'type': 'raster',
+            'source': 'basemap',
+            'minzoom': 0,
+            'maxzoom': 22
+          },
+          {
+            'id': 'category_not_assigned_fill',
+            'type': 'fill',
+            'source': 'landmark_indicative_lands',
+            'source-layer': 'landmark_indicative_lands',
+            'paint': {
+              'fill-color': '#e7ab36',
+              'fill-opacity': 1
+            }
+          }
+        ]
+      }
+    })
+
+    map.on('load', function () {
+        document.getElementById('zoom-level').innerText = 'Zoom Level: ' + map.getZoom().toFixed(2);
+
+        map.on('zoom', function () {
+            document.getElementById('zoom-level').innerText = 'Zoom Level: ' + map.getZoom().toFixed(2);
+        });
+    });
+
+
+
+  </script>
+</body>
+</html>
